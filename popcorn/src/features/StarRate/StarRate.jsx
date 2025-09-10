@@ -1,17 +1,20 @@
 import React from 'react'
 import {useState} from 'react'
 
-const StarRate = ({maxRating = 5, color="yellow", size="48"}) => {
+const StarRate = ({maxRating = 5, color="yellow", size="48", setRating}) => {
     const [rate,setRate] = useState(1)
     const [temRate, setTempRate] = useState(0)
 
     function handleRate(r){
         setRate(r)
+        setRating(r)
+
     }
 
   return (
-    <div>
-     {Array.from({length:maxRating}, (_,i) => (
+    <div style={{alignItems:"center", display:"flex"}}>
+      <div>
+  {Array.from({length:maxRating}, (_,i) => (
             <Star key={i} 
             onRate={() => handleRate(i + 1)} 
             full={temRate ? temRate >= i + 1 : rate >= i + 1}
@@ -23,7 +26,9 @@ const StarRate = ({maxRating = 5, color="yellow", size="48"}) => {
             />
      ))}
 
-     <p>{temRate || rate || " "}</p>
+      </div>
+   
+     <span style={{marginLeft:"10px", lineHeight:"24px"}}>{temRate || rate || " "}</span>
     </div>
   )
 }
